@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(upng VERSION 1.0.5)
+project(upng VERSION 1.0.6)
 
 
 SET(UPNG_SRC
@@ -11,13 +11,12 @@ set(UPNG_HEADER_Files
 	${CMAKE_CURRENT_SOURCE_DIR}/src/upng.h
 )
 
-
-add_library(upng ${UPNG_SRC} ${UPNG_HEADER_Files})
+add_library(upng ${UPNG_HEADER_Files} ${UPNG_SRC})
 
 target_include_directories(
     upng
     PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>"
 )
 
 # Installation (https://github.com/forexample/package-example) {
@@ -25,10 +24,11 @@ target_include_directories(
 set(config_install_dir "lib/cmake/${PROJECT_NAME}")
 set(include_install_dir "include")
 
-set(generated_dir ${CMAKE_CURRENT_BINARY_DIR}/generated)
+set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
 
-set(version_config ${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake)
-set(project_config ${generated_dir}/${PROJECT_NAME}Config.cmake)
+set(version_config "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
+set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
+set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
 set(namespace "${PROJECT_NAME}::")
 
 include(CMakePackageConfigHelpers)
@@ -50,17 +50,11 @@ configure_package_config_file(
 
 install(
     TARGETS upng
-    EXPORT upngTargets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    RUNTIME DESTINATION bin
-    INCLUDES DESTINATION ${include_install_dir}
-)
-
-
-install(
-    FILES "${project_config}" "${version_config}"
-    DESTINATION "${config_install_dir}"
+    EXPORT "${TARGETS_EXPORT_NAME}"
+    LIBRARY DESTINATION "lib"
+    ARCHIVE DESTINATION "lib"
+    RUNTIME DESTINATION "bin"
+    INCLUDES DESTINATION "${include_install_dir}"
 )
 
 install(
@@ -69,7 +63,12 @@ install(
 )
 
 install(
-    EXPORT upngTargets
+    FILES "${project_config}" "${version_config}"
+    DESTINATION "${config_install_dir}"
+)
+
+install(
+    EXPORT "${TARGETS_EXPORT_NAME}"
     NAMESPACE "${namespace}"
     DESTINATION "${config_install_dir}"
 )
