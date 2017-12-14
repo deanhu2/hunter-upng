@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(upng VERSION 1.0.3)
+project(upng VERSION 1.0.4)
 
 
 SET(UPNG_SRC
@@ -51,9 +51,13 @@ configure_package_config_file(
 
 install(
     TARGETS upng
-    EXPORT "${TARGETS_EXPORT_NAME}"
-    INCLUDES DESTINATION "${include_install_dir}"
+    EXPORT ${TARGETS_EXPORT_NAME}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+    INCLUDES DESTINATION ${include_install_dir}
 )
+
 
 install(
     FILES "${project_config}" "${version_config}"
