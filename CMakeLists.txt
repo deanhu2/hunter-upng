@@ -1,6 +1,6 @@
 project(upng)
 
-cmake_minimum_required(VERSION 1.0.12)
+cmake_minimum_required(VERSION 1.0.13)
 
 option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
 option(BUILD_TESTS "Build tests" OFF)
