@@ -1,7 +1,11 @@
 
 cmake_minimum_required(VERSION 3.0)
-project(hunter_upng VERSION 1.0.10)
+project(hunter_upng VERSION 1.0.11)
 
+option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
+option(BUILD_TESTS "Build tests" OFF)
+option(BUILD_PKGCONFIG "Build in PKGCONFIG mode" OFF)
+set(BUILD_DEFINES "" CACHE STRING "Build defines")
 
 SET(upng_src_files
     ${CMAKE_CURRENT_SOURCE_DIR}/src/upng.c
@@ -21,7 +25,8 @@ add_library(hunter_upng ${upng_header_files} ${upng_src_files})
 target_include_directories(
     hunter_upng
     PUBLIC
-    "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>/src"
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src>
+	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}${INSTALL_SUFFIX}>
 )
 
 # Installation (https://github.com/forexample/package-example) {
