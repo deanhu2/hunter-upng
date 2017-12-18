@@ -1,20 +1,25 @@
+
 cmake_minimum_required(VERSION 3.0)
-project(upng VERSION 1.0.8)
+project(hunter_upng VERSION 1.0.9)
 
 
-SET(UPNG_SRC
+SET(upng_src_files
     ${CMAKE_CURRENT_SOURCE_DIR}/src/upng.c
 	${CMAKE_CURRENT_SOURCE_DIR}/src/png2tga.c
+
 )
 
-set(UPNG_HEADER_Files
+
+set(upng_header_files
 	${CMAKE_CURRENT_SOURCE_DIR}/src/upng.h
+
 )
 
-add_library(upng ${UPNG_HEADER_Files} ${UPNG_SRC})
+
+add_library(hunter_upng ${upng_header_files} ${upng_src_files})
 
 target_include_directories(
-    upng
+    hunter_upng
     PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>"
 )
@@ -28,7 +33,7 @@ set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
 
 set(version_config "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
 set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
-set(TARGETS_EXPORT_NAME upngTargets)
+set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
 set(namespace "${PROJECT_NAME}::")
 
 include(CMakePackageConfigHelpers)
@@ -49,18 +54,14 @@ configure_package_config_file(
 )
 
 install(
-    TARGETS upng
-    EXPORT upngTargets
+    TARGETS hunter_upng
+    EXPORT "${TARGETS_EXPORT_NAME}"
     LIBRARY DESTINATION "lib"
     ARCHIVE DESTINATION "lib"
     RUNTIME DESTINATION "bin"
     INCLUDES DESTINATION "${include_install_dir}"
 )
 
-install(
-    FILES ${UPNG_HEADER_Files}
-    DESTINATION "${include_install_dir}"
-)
 
 install(
     FILES "${project_config}" "${version_config}"
@@ -68,9 +69,12 @@ install(
 )
 
 install(
-    EXPORT upngTargets
+    FILES ${upng_header_files}
+    DESTINATION "${include_install_dir}"
+)
+
+install(
+    EXPORT "${TARGETS_EXPORT_NAME}"
     NAMESPACE "${namespace}"
     DESTINATION "${config_install_dir}"
 )
-
-message(STATUS "exports name:" "${TARGETS_EXPORT_NAME}")
