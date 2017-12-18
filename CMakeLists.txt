@@ -27,7 +27,7 @@ endif()
 include(GNUInstallDirs)
 mark_as_advanced(CLEAR CMAKE_INSTALL_LIBDIR CMAKE_INSTALL_INCLUDEDIR)
 
-set(HEADERS src/upng.hpp)
+set(HEADERS src/upng.h)
 set(SOURCES ${HEADERS} src/upng.c src/png2tga.c)
 
 if(DEFINED BUILD_DEFINES)
