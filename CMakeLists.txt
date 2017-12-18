@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.0)
-project(hunter_upng VERSION 1.0.9)
+project(hunter_upng VERSION 1.0.10)
 
 
 SET(upng_src_files
@@ -21,7 +21,7 @@ add_library(hunter_upng ${upng_header_files} ${upng_src_files})
 target_include_directories(
     hunter_upng
     PUBLIC
-    "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>"
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>/src"
 )
 
 # Installation (https://github.com/forexample/package-example) {
