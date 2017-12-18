@@ -28,7 +28,7 @@ set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
 
 set(version_config "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
 set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
-set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
+set(TARGETS_EXPORT_NAME upngTargets)
 set(namespace "${PROJECT_NAME}::")
 
 include(CMakePackageConfigHelpers)
@@ -50,7 +50,7 @@ configure_package_config_file(
 
 install(
     TARGETS upng
-    EXPORT "${TARGETS_EXPORT_NAME}"
+    EXPORT upngTargets
     LIBRARY DESTINATION "lib"
     ARCHIVE DESTINATION "lib"
     RUNTIME DESTINATION "bin"
@@ -68,7 +68,9 @@ install(
 )
 
 install(
-    EXPORT "${TARGETS_EXPORT_NAME}"
+    EXPORT upngTargets
     NAMESPACE "${namespace}"
     DESTINATION "${config_install_dir}"
 )
+
+message(STATUS "exports name:" "${TARGETS_EXPORT_NAME}")
