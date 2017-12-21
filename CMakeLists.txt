@@ -1,6 +1,6 @@
 project(upng)
 
-cmake_minimum_required(VERSION 1.0.13)
+cmake_minimum_required(VERSION 1.0.14)
 
 option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
 option(BUILD_TESTS "Build tests" OFF)
@@ -42,6 +42,7 @@ else()
 	add_library(upng STATIC ${SOURCES})
 endif()
 
+
 # Enable C++11 long long for compilers that are capable of it
 if(NOT ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} STRLESS 3.1 AND ";${CMAKE_CXX_COMPILE_FEATURES};" MATCHES ";cxx_long_long_type;")
 	target_compile_features(upng PUBLIC cxx_long_long_type)
@@ -70,6 +71,10 @@ if(BUILD_PKGCONFIG)
 	configure_file(scripts/upng.pc.in ${PROJECT_BINARY_DIR}/upng.pc @ONLY)
 	install(FILES ${PROJECT_BINARY_DIR}/upng.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig)
 endif()
+
+include(GenerateExportHeader)
+generate_export_header(upng)
+
 
 if(BUILD_TESTS)
 endif()
