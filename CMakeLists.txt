@@ -1,6 +1,6 @@
 project(upng)
 
-cmake_minimum_required(VERSION 1.0.14)
+cmake_minimum_required(VERSION 1.0.15)
 
 option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
 option(BUILD_TESTS "Build tests" OFF)
@@ -56,9 +56,15 @@ if(BUILD_PKGCONFIG)
 	set(INSTALL_SUFFIX /upng-${UPNG_VERSION_STRING})
 endif()
 
+include(GenerateExportHeader)
+generate_export_header(upng)
+
 target_include_directories(upng PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src>
-	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}${INSTALL_SUFFIX}>)
+	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}${INSTALL_SUFFIX}>
+	$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
+	$<INSTALL_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src>
+)
 
 install(TARGETS upng EXPORT upng-config
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}${INSTALL_SUFFIX}
@@ -72,8 +78,7 @@ if(BUILD_PKGCONFIG)
 	install(FILES ${PROJECT_BINARY_DIR}/upng.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig)
 endif()
 
-include(GenerateExportHeader)
-generate_export_header(upng)
+
 
 
 if(BUILD_TESTS)
